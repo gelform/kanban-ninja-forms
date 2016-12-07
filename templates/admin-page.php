@@ -6,7 +6,11 @@
 	<?php if ( !function_exists( 'Ninja_Forms' ) ) : ?>
 		<div class="notice notice-error">
 			<p>
-				<?php echo __('Please install and activate Ninja Forms', 'kanban') ?>
+				<?php echo sprintf(
+					__('Please install and activate %s.', 'kanban'),
+					'<a href="https://ninjaforms.com" target="_blank">Ninja Forms</a>'
+				)
+				?>
 			</p>
 		</div>
 	<?php endif ?>

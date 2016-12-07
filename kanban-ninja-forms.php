@@ -5,7 +5,7 @@ Plugin Name:		Kanban + Ninja Forms
 Plugin URI:			https://kanbanwp.com/addons/ninjaforms/
 Description:		Use Ninja Forms forms to interact with your Kanban boards.
 Requires at least:	4.0
-Tested up to:		4.6.1
+Tested up to:		4.7.0
 Version:			0.0.1
 Release Date:		November 28, 2016
 Author:				Gelform Inc
@@ -47,12 +47,6 @@ class Kanban_Ninja_Forms {
 
 
 
-//	static $options = array(
-//		'ninjaforms' => array()
-//	);
-
-
-
 	static function init() {
 		self::$slug            = basename( __FILE__, '.php' );
 		self::$plugin_basename = plugin_basename( __FILE__ );
@@ -70,25 +64,27 @@ class Kanban_Ninja_Forms {
 
 
 
+		// Catch and save admin settings.
 		add_action( 'init', array( __CLASS__, 'save_settings' ) );
 
-
-		// add tab to settings page
+		// Add admin subpage to Kanban admin menu.
 		add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ), 10 );
 
-
-
+		// Save the submitted form data as a Kanban task.
 		add_action( 'ninja_forms_after_submission', array( __CLASS__, 'on_post_submission' ), 10, 2 );
 
-
-
+		// Add Kanban data to dropdowns, radio buttons, etc.
 		add_filter( 'ninja_forms_render_options', array( __CLASS__, 'populate_field' ), 10, 2 );
 
+		// Add Kanban data to hidden fields.
 		add_filter( 'ninja_forms_render_default_value', array( __CLASS__, 'populate_default_value' ), 10, 3 );
 	}
 
 
 
+	/**
+	 * Add admin subpage to Kanban admin menu.
+	 */
 	static function admin_menu() {
 		add_submenu_page(
 			Kanban::get_instance()->settings->basename,
@@ -102,15 +98,19 @@ class Kanban_Ninja_Forms {
 
 
 
+	// Render admin subpage.
 	static function add_admin_page() {
 
+		// Get forms.
 		$forms = array();
 		if ( function_exists( 'Ninja_Forms' ) ) {
 			$forms = Ninja_Forms()->form()->get_forms();
 		}
 
+		// Get all boards.
 		$boards = Kanban_Board::get_all();
 
+		// Get all data for all boards.
 		foreach ( $boards as $board_id => &$board ) {
 			$board->projects  = Kanban_Project::get_all( $board_id );
 			$board->statuses  = Kanban_Status::get_all( $board_id );
@@ -139,6 +139,9 @@ class Kanban_Ninja_Forms {
 
 
 
+	/**
+	 * Save admin data.
+	 */
 	static function save_settings() {
 
 		if ( ! is_admin() || $_SERVER[ 'REQUEST_METHOD' ] != 'POST' || ! isset( $_POST[ self::$slug . '-nonce' ] ) || ! wp_verify_nonce( $_POST[ self::$slug . '-nonce' ], self::$slug ) ) {
