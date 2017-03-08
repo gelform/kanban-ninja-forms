@@ -5,9 +5,9 @@ Plugin Name:		Kanban + Ninja Forms
 Plugin URI:			https://kanbanwp.com/addons/ninjaforms/
 Description:		Use Ninja Forms forms to interact with your Kanban boards.
 Requires at least:	4.0
-Tested up to:		4.7.0
-Version:			0.0.1
-Release Date:		November 28, 2016
+Tested up to:		4.7.3
+Version:			0.0.2
+Release Date:		March 7, 2017
 Author:				Gelform Inc
 Author URI:			http://gelwp.com
 License:			GPLv2 or later
@@ -44,24 +44,36 @@ class Kanban_Ninja_Forms {
 	static $slug = '';
 	static $friendlyname = '';
 	static $plugin_basename = '';
+	static $plugin_data;
 
 
 
 	static function init() {
-		self::$slug            = basename( __FILE__, '.php' );
+		self::$slug = basename( __FILE__, '.php' );
 		self::$plugin_basename = plugin_basename( __FILE__ );
-		self::$friendlyname    = 'Kanban + Ninja Forms';
+		self::$friendlyname = trim( str_replace( array( 'Kanban', '_' ), ' ', __CLASS__ ) );
 
 
 
-		register_activation_hook( __FILE__, array( __CLASS__, 'check_for_core' ) );
-		add_action( 'admin_init', array( __CLASS__, 'check_for_core' ) );
-
-		// just in case
-		if ( ! self::_is_parent_loaded() ) {
-			return;
+		if ( !function_exists( 'get_plugin_data' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
+		self::$plugin_data = get_plugin_data( __FILE__ );
+
+
+
+		$is_core = self::check_for_core();
+		if ( !$is_core ) return false;
+
+//		self::check_for_updates();
+
+
+
+//		add_filter(
+//			'kanban_option_get_defaults_return',
+//			array(__CLASS__, 'add_options_defaults')
+//		);
 
 
 		// Catch and save admin settings.
@@ -396,19 +408,47 @@ class Kanban_Ninja_Forms {
 
 
 
+	/**
+	 * Functions to do on single blog activation, like remove db option.
+	 */
+//	static function on_deactivation() {
+//	}
+
+
+
+//	static function add_options_defaults( $defaults ) {
+//		return array_merge( $defaults, self::$options );
+//	}
+
+
+
 	static function check_for_core() {
-		if ( self::_is_parent_loaded() ) {
-			return true;
+		if ( class_exists( 'Kanban' ) ) {
+			return TRUE;
 		}
 
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		add_action( 'admin_notices', array( __CLASS__, 'admin_deactivate_notice' ) );
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		if ( is_plugin_active_for_network( self::$plugin_basename ) ) {
+			add_action( 'network_admin_notices',  array( __CLASS__, 'admin_deactivate_notice' ) );
+		}
+		else {
+			add_action( 'admin_notices', array( __CLASS__, 'admin_deactivate_notice' ) );
+		}
+
+
+
+		deactivate_plugins( self::$plugin_basename );
+
+		return FALSE;
 	}
 
 
 
 	static function admin_deactivate_notice() {
-		if ( ! is_admin() ) {
+		if ( !is_admin() ) {
 			return;
 		}
 		?>
@@ -416,7 +456,7 @@ class Kanban_Ninja_Forms {
 			<p>
 				<?php
 				echo sprintf(
-					__( 'Whoops! This plugin %s requires the <a href="https://wordpress.org/plugins/kanban/" target="_blank">Kanban for WordPress</a> plugin.
+					__('Whoops! This plugin %s requires the <a href="https://wordpress.org/plugins/kanban/" target="_blank">Kanban for WordPress</a> plugin.
 	            		Please make sure it\'s installed and activated.'
 					),
 					self::$friendlyname
@@ -427,53 +467,16 @@ class Kanban_Ninja_Forms {
 		<?php
 	}
 
-
-
-	static function _is_parent_loaded() {
-		return class_exists( 'Kanban' );
-	}
-
-
-
-	static function _is_parent_activated() {
-
-		if ( is_multisite() ) {
-			$active_plugins_basenames = get_site_option( 'active_sitewide_plugins' );
-
-			if ( ! empty( $active_plugins_basenames ) ) {
-				$active_plugins_basenames = array_keys( $active_plugins_basenames );
-			}
-		} else {
-			$active_plugins_basenames = get_option( 'active_plugins' );
-		}
-
-		foreach ( $active_plugins_basenames as $plugin_basename ) {
-			if ( false !== strpos( $plugin_basename, '/kanban.php' ) ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-
 }
 
 
 
-function kanban_ninjaforms_addon() {
+function Kanban_Ninja_Forms() {
 	Kanban_Ninja_Forms::init();
 }
 
 
 
-if ( Kanban_Ninja_Forms::_is_parent_loaded() ) {
-	// If parent plugin already included, init add-on.
-	kanban_ninjaforms_addon();
-} else if ( Kanban_Ninja_Forms::_is_parent_activated() ) {
-	// Init add-on only after the parent plugins is loaded.
-	add_action( 'kanban_loaded', 'kanban_ninjaforms_addon' );
-} else {
-	// Even though the parent plugin is not activated, execute add-on for activation / uninstall hooks.
-	kanban_ninjaforms_addon();
-}
+add_action( 'plugins_loaded', 'Kanban_Ninja_Forms', 20, 0 );
+
+

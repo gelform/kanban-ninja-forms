@@ -3,9 +3,9 @@ Contributors:		gelform
 Plugin URI:			https://kanbanwp.com/addons/ninja-forms/
 Description:		Create tasks using Ninja Forms forms.
 Requires at least:	4.0
-Tested up to:		4.7.0
-Version:			0.0.1
-Release Date:		November 28, 2016
+Tested up to:		4.7.3
+Version:			0.0.2
+Release Date:		March 7, 2017
 Stable tag:         trunk
 Author:				Gelform Inc
 Author URI:			http://gelwp.com
