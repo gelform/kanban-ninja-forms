@@ -1,15 +1,15 @@
 <?php
 /*
-Contributors:		gelform
+Contributors:		gelform, kkoppenhaver
 Plugin Name:		Kanban + Ninja Forms
 Plugin URI:			https://kanbanwp.com/addons/ninjaforms/
 Description:		Use Ninja Forms forms to interact with your Kanban boards.
 Requires at least:	4.0
-Tested up to:		4.7.3
-Version:			0.0.2
+Tested up to:		5.7.1
+Version:			0.0.4
 Release Date:		March 7, 2017
-Author:				Gelform Inc
-Author URI:			http://gelwp.com
+Author:				HKH Systems
+Author URI:			https://kanbanwp.com
 License:			GPLv2 or later
 License URI:		http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:		kanban

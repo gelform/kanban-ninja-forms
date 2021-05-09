@@ -4,7 +4,7 @@ Plugin URI:			https://kanbanwp.com/addons/ninja-forms/
 Description:		Create tasks using Ninja Forms forms.
 Requires at least:	4.0
 Tested up to:		5.7.1
-Version:			0.0.3
+Version:			0.0.4
 Release Date:		March 7, 2017
 Stable tag:     	trunk
 Author:				HKH Systems
