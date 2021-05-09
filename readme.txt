@@ -1,19 +1,19 @@
 === Kanban + Ninja Forms ===
-Contributors:		gelform
+Contributors:		gelform, kkoppenhaver
 Plugin URI:			https://kanbanwp.com/addons/ninja-forms/
 Description:		Create tasks using Ninja Forms forms.
 Requires at least:	4.0
-Tested up to:		4.7.3
-Version:			0.0.2
+Tested up to:		5.7.1
+Version:			0.0.3
 Release Date:		March 7, 2017
-Stable tag:         trunk
-Author:				Gelform Inc
-Author URI:			http://gelwp.com
+Stable tag:     	trunk
+Author:				HKH Systems
+Author URI:			https://kanbanwp.com
 License:			GPLv2 or later
 License URI:		http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:		kanban-ninja-forms
 Domain Path: 		/languages/
-Tags:               kanban, ninja forms, integration, adapter
+Tags:           	kanban, ninja forms, integration, adapter
 
 
 
