@@ -17,11 +17,11 @@ Tags:           	kanban, ninja forms, integration, adapter
 
 
 
-Create tasks on your Kanban board using Ninja Forms forms by linking form fields to Kanban card attributes. When a user enters data into your form and clicks "Submit", a card will be created automatically with all the relevant information.
+Create tasks on your Kanban board using Ninja Forms forms.
 
 == Description ==
 
-This is an add-on plugn for [Kanban for WordPress](https://KanbanWP.com). Allow visitors, users, or clients to create tasks easily from Ninja Forms.
+This is an add-on plugn for [Kanban for WordPress](https://KanbanWP.com). It allows visitors, users, or clients to create tasks easily from Ninja Forms by linking form fields to Kanban card attributes. When a user enters data into your form and clicks "Submit", a card will be created automatically with all the relevant information.
 
 Note: This plugin also requires the free plugin, [Ninja Forms](http://www.ninjaforms.com/).
 
