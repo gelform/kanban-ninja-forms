@@ -6,9 +6,9 @@ Plugin URI:			https://kanbanwp.com/addons/ninjaforms/
 Description:		Use Ninja Forms forms to interact with your Kanban boards.
 Requires at least:	4.0
 Tested up to:		5.7.1
-Version:			0.0.4
+Version:			0.0.5
 Release Date:		March 7, 2017
-Author:				HKH Systems
+Author:				Kanban for WordPress
 Author URI:			https://kanbanwp.com
 License:			GPLv2 or later
 License URI:		http://www.gnu.org/licenses/gpl-2.0.html
