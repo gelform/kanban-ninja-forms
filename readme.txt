@@ -17,7 +17,7 @@ Tags:           	kanban, ninja forms, integration, adapter
 
 
 
-Create tasks on your Kanban board using Ninja Forms forms.
+Create tasks on your Kanban board using Ninja Forms forms by linking form fields to Kanban card attributes. When a user enters data into your form and clicks "Submit", a card will be created automatically with all the relevant information.
 
 == Description ==
 
